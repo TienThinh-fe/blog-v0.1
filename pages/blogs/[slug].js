@@ -5,9 +5,9 @@ import path from "path";
 import fs from "fs";
 import { serialize } from "next-mdx-remote/serialize";
 import SingleBlog from "../../components/blog/SingleBlog";
+import rehypeHighlight from "rehype-highlight";
 
-export default function SingleBlogPage({ mdxSource, frontmatter, slug }) {
-  console.log("FRONTMATTER: ", frontmatter);
+export default function SingleBlogPage({ mdxSource, frontmatter }) {
   return <SingleBlog mdxSource={mdxSource} frontmatter={frontmatter} />;
 }
 
@@ -16,7 +16,11 @@ export async function getStaticProps({ params }) {
   const filePath = path.join(postsPath, `${slug}.mdx`);
   const fileContent = fs.readFileSync(filePath, "utf8");
   const { data: frontmatter, content } = matter(fileContent);
-  const mdxSource = await serialize(content);
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      rehypePlugins: [rehypeHighlight],
+    },
+  });
   return {
     props: {
       mdxSource,

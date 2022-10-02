@@ -8,28 +8,28 @@ import classes from "./BlogList.module.scss";
 const BlogItemCard = ({ post }) => {
   return (
     <div className={classes.item}>
-      {post.bannerUrl && (
+      {post.frontmatter.bannerUrl && (
         <div className={classes.bannerImg}>
           <Image
-            src={post.bannerUrl}
-            alt={post.title}
+            src={post.frontmatter.bannerUrl}
+            alt={post.frontmatter.title}
             layout="fill"
             objectFit="cover"
           ></Image>
         </div>
       )}
-      <Link href={`/blog/${post.slug}`}>
-        <a className={classes.blogTitle}>{post.title}</a>
+      <Link href={`/blogs/${post.slug}`}>
+        <a className={classes.blogTitle}>{post.frontmatter.title}</a>
       </Link>
-      {post.date && (
+      {post.frontmatter.date && (
         <Text className={classes.blogDate}>
-          {format(new Date(post.date), "PPP")}
+          {format(new Date(post.frontmatter.date), "PPP")}
         </Text>
       )}
-      {post.tags && (
+      {post.frontmatter.tags && (
         <Text className={classes.tags}>
           Tags:{" "}
-          {post.tags.map((tag, index, tags) => (
+          {post.frontmatter.tags.map((tag, index, tags) => (
             <span key={tag}>
               {tag}
               {index < tags.length - 1 && ", "}
@@ -37,8 +37,10 @@ const BlogItemCard = ({ post }) => {
           ))}
         </Text>
       )}
-      {post.description && (
-        <Text className={classes.description}>{post.description}</Text>
+      {post.frontmatter.description && (
+        <Text className={classes.description}>
+          {post.frontmatter.description}
+        </Text>
       )}
     </div>
   );
