@@ -6,7 +6,7 @@ const BlogList = ({ posts }) => {
   return (
     <div className={classes.container}>
       {posts.map((post) => (
-        <BlogItemCard post={post.frontmatter} />
+        <BlogItemCard key={post} post={post.frontmatter} />
       ))}
     </div>
   );
